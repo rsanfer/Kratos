@@ -13,6 +13,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/applications/MeshingApplication )
 set( KRATOS_STRUCTURAL_MECHANICS_APPLICATION_CORE
   ## MAIN FILES
   ${CMAKE_CURRENT_SOURCE_DIR}/structural_mechanics_application.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/structural_mechanics_application_constitutive_laws.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/structural_mechanics_application_variables.cpp
 
   ## UTILITIES
