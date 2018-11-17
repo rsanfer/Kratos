@@ -128,6 +128,7 @@ public:
     ///@name Operations
     ///@{
 
+
     /**
      * @brief Computes the material response in terms of 1st Piola-Kirchhoff stresses and constitutive tensor
      * @see Parameters

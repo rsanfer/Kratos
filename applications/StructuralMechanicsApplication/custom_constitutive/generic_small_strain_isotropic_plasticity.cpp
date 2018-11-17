@@ -37,6 +37,11 @@
 
 namespace Kratos
 {
+
+
+/***********************************************************************************/
+/***********************************************************************************/
+
 template <class TConstLawIntegratorType>
 void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMaterialResponsePK2(ConstitutiveLaw::Parameters& rValues)
 {
@@ -105,7 +110,8 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
             // S0 = r_constitutive_matrix:(E-Ep)
             predictive_stress_vector = prod(r_constitutive_matrix, r_strain_vector - plastic_strain);
         }
-
+        KRATOS_WATCH(plastic_strain)
+		KRATOS_WATCH(predictive_stress_vector)
         // Initialize Plastic Parameters
         double uniaxial_stress = 0.0, plastic_denominator = 0.0;
         array_1d<double, VoigtSize> f_flux(VoigtSize, 0.0); // DF/DS
@@ -119,6 +125,7 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
             r_constitutive_matrix, rValues, characteristic_length,
             plastic_strain);
 
+        KRATOS_WATCH(uniaxial_stress)
         const double F = uniaxial_stress - threshold;
 
         if (F <= std::abs(1.0e-4 * threshold)) { // Elastic case
@@ -130,7 +137,7 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
             this->SetValue(UNIAXIAL_STRESS, uniaxial_stress, rValues.GetProcessInfo());
 
             if (r_constitutive_law_options.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR)) {
-                if (plastic_dissipation > 0.0) {
+                if (std::abs(F) < 1.0e-3 * threshold) {
                     this->CalculateTangentTensor(rValues); // this modifies the ConstitutiveMatrix
                     noalias(tangent_tensor) = rValues.GetConstitutiveMatrix();  
                 } else {
