@@ -209,7 +209,7 @@ void SmallDisplacement::CalculateConstitutiveVariables(
     rValues.SetStressVector(rThisConstitutiveVariables.StressVector); //F computed somewhere else
 
     // Actually do the computations in the ConstitutiveLaw
-    std::cout << "Elem id:" << this->Id() << " PointNumber: " << PointNumber << "\t" << mConstitutiveLawVector[PointNumber]->PrintInfo() << std::endl;
+    std::cout << "Elem id:" << this->Id() << " PointNumber: " << PointNumber << "\t" << mConstitutiveLawVector[PointNumber]->Info() << std::endl;
     mConstitutiveLawVector[PointNumber]->CalculateMaterialResponse(rValues, ThisStressMeasure); //here the calculations are actually done
 }
 

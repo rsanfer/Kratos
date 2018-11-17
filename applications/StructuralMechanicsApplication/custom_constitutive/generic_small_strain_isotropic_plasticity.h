@@ -347,10 +347,12 @@ public:
     ///@name Input and output
     ///@{
 
-    /// Print information about this object.
-    void PrintInfo(std::ostream& rOStream) const override
+    /// Turn back information as a string.
+    std::string Info() const override
     {
-        rOStream << "PLASTICITYMODERFUCKER";
+        std::stringstream buffer;
+        buffer << "PLASTICITYMODERFUCKER";
+        return buffer.str();
     }
 
     ///@}

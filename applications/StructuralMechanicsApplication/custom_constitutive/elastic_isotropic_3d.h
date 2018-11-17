@@ -321,10 +321,12 @@ protected:
 
     ///@}
 
-    /// Print information about this object.
-    void PrintInfo(std::ostream& rOStream) const override
+    /// Turn back information as a string.
+    std::string Info() const override
     {
-        rOStream << "ELASTICISOTROPICMODERFUCKER";
+        std::stringstream buffer;
+        buffer << "ELASTICISOTROPICMODERFUCKER";
+        return buffer.str();
     }
 
 private:
