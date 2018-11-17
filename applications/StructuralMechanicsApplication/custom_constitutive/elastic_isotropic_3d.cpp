@@ -78,6 +78,7 @@ void  ElasticIsotropic3D::CalculateMaterialResponsePK2(ConstitutiveLaw::Paramete
         if( r_options.Is( ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR ) ) {
             Matrix& r_constitutive_matrix = rValues.GetConstitutiveMatrix();
             noalias(r_stress_vector) = prod( r_constitutive_matrix, r_strain_vector);
+           std::cout << "estoy en linear!!! T.T" << std::endl;
         } else {
             CalculatePK2Stress( r_strain_vector, r_stress_vector, rValues);
         }
