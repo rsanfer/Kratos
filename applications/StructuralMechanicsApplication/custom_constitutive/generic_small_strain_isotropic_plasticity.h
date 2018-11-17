@@ -347,6 +347,12 @@ public:
     ///@name Input and output
     ///@{
 
+    /// Print information about this object.
+    void PrintInfo(std::ostream& rOStream) const override
+    {
+        rOStream << "PLASTICITYMODERFUCKER";
+    }
+
     ///@}
     ///@name Friends
     ///@{

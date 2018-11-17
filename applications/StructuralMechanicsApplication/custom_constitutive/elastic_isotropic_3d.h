@@ -321,6 +321,12 @@ protected:
 
     ///@}
 
+    /// Print information about this object.
+    void PrintInfo(std::ostream& rOStream) const override
+    {
+        rOStream << "ELASTICISOTROPICMODERFUCKER";
+    }
+
 private:
 
     ///@name Static Member Variables
