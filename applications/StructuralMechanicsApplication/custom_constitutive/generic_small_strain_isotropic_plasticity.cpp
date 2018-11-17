@@ -148,7 +148,6 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
                 characteristic_length);
             noalias(integrated_stress_vector) = predictive_stress_vector;
 
-            //KRATOS_WATCH(uniaxial_stress)
             this->SetNonConvPlasticDissipation(plastic_dissipation);
             this->SetNonConvPlasticStrain(plastic_strain);
             this->SetNonConvThreshold(threshold);
