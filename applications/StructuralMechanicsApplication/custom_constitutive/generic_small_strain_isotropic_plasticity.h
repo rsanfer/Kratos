@@ -348,12 +348,6 @@ public:
     ///@{
 
     /// Turn back information as a string.
-    std::string Info() const override
-    {
-        std::stringstream buffer;
-        buffer << "PLASTICITYMODERFUCKER";
-        return buffer.str();
-    }
 
     ///@}
     ///@name Friends

@@ -110,8 +110,6 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
             // S0 = r_constitutive_matrix:(E-Ep)
             predictive_stress_vector = prod(r_constitutive_matrix, r_strain_vector - plastic_strain);
         }
-        
-		std::cout << "estoy en plasticidad" << std::endl;
         // Initialize Plastic Parameters
         double uniaxial_stress = 0.0, plastic_denominator = 0.0;
         array_1d<double, VoigtSize> f_flux(VoigtSize, 0.0); // DF/DS
@@ -140,7 +138,15 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
                     this->CalculateTangentTensor(rValues); // this modifies the ConstitutiveMatrix
                     noalias(tangent_tensor) = rValues.GetConstitutiveMatrix();  
                 } else {
+                    // std::cout << "**********************************" << std::endl;
                     noalias(tangent_tensor) = r_constitutive_matrix;
+                    // KRATOS_WATCH(r_constitutive_matrix)
+                    // std::cout << "**********************************" << std::endl;
+                    // if (uniaxial_stress > 0 ) {
+                    //     this->CalculateTangentTensor(rValues);
+                    //     KRATOS_WATCH(rValues.GetConstitutiveMatrix())
+                    // }
+                    // std::cout << "**********************************" << std::endl;
                 }
             }
         } else { // Plastic case
@@ -162,6 +168,7 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
             if (r_constitutive_law_options.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR)) {
                 this->CalculateTangentTensor(rValues); // this modifies the ConstitutiveMatrix
                 noalias(tangent_tensor) = rValues.GetConstitutiveMatrix();
+                //KRATOS_WATCH(tangent_tensor)
             }
         }
     }

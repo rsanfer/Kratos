@@ -115,7 +115,7 @@ public:
         for (std::size_t i_component = 0; i_component < num_components; ++i_component) {
             // Calculate the perturbation
             double pertubation;
-            CalculatePerturbation(perturbed_strain, i_component, pertubation);
+            CalculatePerturbation(strain_vector_gp, i_component, pertubation);
 
             // We check that the perturbation has a threshold value of PerturbationThreshold
             if (pertubation < PerturbationThreshold) pertubation = PerturbationThreshold;

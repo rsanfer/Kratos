@@ -321,13 +321,6 @@ protected:
 
     ///@}
 
-    /// Turn back information as a string.
-    std::string Info() const override
-    {
-        std::stringstream buffer;
-        buffer << "ELASTICISOTROPICMODERFUCKER";
-        return buffer.str();
-    }
 
 private:
 
