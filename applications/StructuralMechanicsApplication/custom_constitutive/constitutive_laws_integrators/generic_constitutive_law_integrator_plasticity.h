@@ -177,7 +177,7 @@ class GenericConstitutiveLawIntegratorPlasticity
         while (is_converged == false && iteration <= max_iter) {
             F = rUniaxialStress - rThreshold;
             plastic_consistency_factor_increment = F * rPlasticDenominator;
-            //if (plastic_consistency_factor_increment < 0.0) plastic_consistency_factor_increment = 0.0; // NOTE: It could be useful, maybe
+            // if (plastic_consistency_factor_increment < 0.0) plastic_consistency_factor_increment = 0.0; // NOTE: It could be useful, maybe
             noalias(rPlasticStrainIncrement) = plastic_consistency_factor_increment * rGflux;
             noalias(rPlasticStrain) += rPlasticStrainIncrement;
             noalias(delta_sigma) = prod(rConstitutiveMatrix, rPlasticStrainIncrement);
@@ -190,12 +190,20 @@ class GenericConstitutiveLawIntegratorPlasticity
 
             F = rUniaxialStress - rThreshold;
 
+            // KRATOS_WATCH(rPlasticStrainIncrement)
+            // KRATOS_WATCH(rPlasticStrain)
+            // KRATOS_WATCH(rStrainVector)
+            // KRATOS_WATCH(rPredictiveStressVector)
+            // KRATOS_WATCH(rPlasticDissipation)
+            // KRATOS_WATCH(rUniaxialStress)
+
             if (std::abs(F) <= std::abs(1.0e-4 * rThreshold)) { // Has converged
                 is_converged = true;
             } else {
                 iteration++;
-            }
+            }   
         }
+        // std::cout << "*************************************" << std::endl;
         KRATOS_WARNING_IF("Backward Euler Plasticity", iteration > max_iter) << "Maximum number of iterations in plasticity loop reached..." << std::endl;
     }
 

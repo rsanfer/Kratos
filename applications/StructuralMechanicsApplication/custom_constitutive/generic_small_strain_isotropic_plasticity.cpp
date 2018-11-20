@@ -125,29 +125,17 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
 
         const double F = uniaxial_stress - threshold;
 
+        // KRATOS_WATCH(uniaxial_stress)
+        // std::cout << "-> empezamos integracion" << std::endl;
+
         if (F <= std::abs(1.0e-4 * threshold)) { // Elastic case
             noalias(integrated_stress_vector) = predictive_stress_vector;
 
-            this->SetNonConvPlasticDissipation(plastic_dissipation);
-            this->SetNonConvPlasticStrain(plastic_strain);
-            this->SetNonConvThreshold(threshold);
-            this->SetValue(UNIAXIAL_STRESS, uniaxial_stress, rValues.GetProcessInfo());
-
             if (r_constitutive_law_options.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR)) {
-                if (std::abs(F) < 1.0e-3 * threshold) {
-                    this->CalculateTangentTensor(rValues); // this modifies the ConstitutiveMatrix
-                    noalias(tangent_tensor) = rValues.GetConstitutiveMatrix();  
-                } else {
-                    // std::cout << "**********************************" << std::endl;
-                    noalias(tangent_tensor) = r_constitutive_matrix;
-                    // KRATOS_WATCH(r_constitutive_matrix)
-                    // std::cout << "**********************************" << std::endl;
-                    // if (uniaxial_stress > 0 ) {
-                    //     this->CalculateTangentTensor(rValues);
-                    //     KRATOS_WATCH(rValues.GetConstitutiveMatrix())
-                    // }
-                    // std::cout << "**********************************" << std::endl;
-                }
+                this->SetNonConvPlasticDissipation(plastic_dissipation);
+                this->SetNonConvPlasticStrain(plastic_strain);
+                this->SetNonConvThreshold(threshold);
+                this->SetValue(UNIAXIAL_STRESS, uniaxial_stress, rValues.GetProcessInfo());
             }
         } else { // Plastic case
             // while loop backward euler
@@ -160,15 +148,13 @@ void GenericSmallStrainIsotropicPlasticity<TConstLawIntegratorType>::CalculateMa
                 characteristic_length);
             noalias(integrated_stress_vector) = predictive_stress_vector;
 
-            this->SetNonConvPlasticDissipation(plastic_dissipation);
-            this->SetNonConvPlasticStrain(plastic_strain);
-            this->SetNonConvThreshold(threshold);
-            this->SetValue(UNIAXIAL_STRESS, uniaxial_stress, rValues.GetProcessInfo());
-
             if (r_constitutive_law_options.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR)) {
                 this->CalculateTangentTensor(rValues); // this modifies the ConstitutiveMatrix
                 noalias(tangent_tensor) = rValues.GetConstitutiveMatrix();
-                //KRATOS_WATCH(tangent_tensor)
+                this->SetNonConvPlasticDissipation(plastic_dissipation);
+                this->SetNonConvPlasticStrain(plastic_strain);
+                this->SetNonConvThreshold(threshold);
+                this->SetValue(UNIAXIAL_STRESS, uniaxial_stress, rValues.GetProcessInfo());
             }
         }
     }
