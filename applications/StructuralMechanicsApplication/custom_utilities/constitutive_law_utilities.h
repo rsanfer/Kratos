@@ -168,15 +168,20 @@ public:
         Vector& SecondVector
         )
     {
-		if (SecondVector.size() == 0) SecondVector.resize(6);
-        const double twosqrtJ2 = 2.0*std::sqrt(J2);
-        for (int i = 0; i < 6; i++) {
-            SecondVector[i] = Deviator[i] / (twosqrtJ2);
-        }
+        if (SecondVector.size() == 0) SecondVector.resize(6);
 
-        SecondVector[3] *= 2.0;
-        SecondVector[4] *= 2.0;
-        SecondVector[5] *= 2.0;
+        if (J2 > tolerance) {
+            const double twosqrtJ2 = 2.0*std::sqrt(J2);
+            for (int i = 0; i < 6; i++) {
+                SecondVector[i] = Deviator[i] / (twosqrtJ2);
+            }
+
+            SecondVector[3] *= 2.0;
+            SecondVector[4] *= 2.0;
+            SecondVector[5] *= 2.0;
+        } else {
+            noalias(SecondVector) = ZeroVector(6);
+        }
     }
 
     /**
@@ -214,10 +219,16 @@ public:
         double& LodeAngle
         )
     {
-        double sint3 = (-3.0*std::sqrt(3.0)*J3) / (2.0*J2*std::sqrt(J2));
-        if (sint3 < -0.95) sint3 = -1.0;
-        if (sint3 > 0.95)  sint3 = 1.0;
-        LodeAngle = std::asin(sint3) / 3.0;
+        if (J2 > tolerance) {
+            double sint3 = (-3.0 * std::sqrt(3.0) * J3) / (2.0 * J2 * std::sqrt(J2));
+            if (sint3 < -0.95)
+                sint3 = -1.0;
+            else if (sint3 > 0.95)
+                sint3 = 1.0;
+            LodeAngle = std::asin(sint3) / 3.0;
+        } else {
+            LodeAngle = 0.0;
+        }
     }
 
     /**
