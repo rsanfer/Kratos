@@ -199,14 +199,14 @@ public:
         if (F <= std::abs(1.0e-8 * Threshold)) {   // Elastic case
 
             noalias(IntegratedStressVector) = PredictiveStressVector;
-            this->SetNonConvPlasticDissipation(PlasticDissipation);
-            this->SetNonConvPlasticStrain(PlasticStrain);
-            this->SetNonConvThreshold(Threshold);
 
-			if (ConstitutiveLawOptions.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR) == true) {
-				noalias(TangentTensor) = C;
+            if (ConstitutiveLawOptions.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR) == true) {
+                this->SetNonConvPlasticDissipation(PlasticDissipation);
+                this->SetNonConvPlasticStrain(PlasticStrain);
+                this->SetNonConvThreshold(Threshold);
+                noalias(TangentTensor) = C;
                 this->SetValue(UNIAXIAL_STRESS, UniaxialStress, rValues.GetProcessInfo());
-			}
+            }
 
         } else { // Plastic case
 
