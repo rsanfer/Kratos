@@ -217,16 +217,17 @@ public:
                 UniaxialStress, Threshold, PlasticDenominator, Fflux, Gflux, PlasticDissipation, PlasticStrainIncrement, 
                 C, PlasticStrain, rMaterialProperties, CharacteristicLength);
 
-			noalias(IntegratedStressVector) = PredictiveStressVector;
-            this->SetNonConvPlasticDissipation(PlasticDissipation);
-            this->SetNonConvPlasticStrain(PlasticStrain);
-            this->SetNonConvThreshold(Threshold);
+                noalias(IntegratedStressVector) = PredictiveStressVector;
 
-			if (ConstitutiveLawOptions.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR) == true) {
-				this->CalculateTangentTensor(rValues); // this modifies the C
-				noalias(TangentTensor) = rValues.GetConstitutiveMatrix();
-                this->SetValue(UNIAXIAL_STRESS, UniaxialStress, rValues.GetProcessInfo());
-			}
+                if (ConstitutiveLawOptions.Is(ConstitutiveLaw::COMPUTE_CONSTITUTIVE_TENSOR) == true) {
+                    this->SetNonConvPlasticDissipation(PlasticDissipation);
+                    this->SetNonConvPlasticStrain(PlasticStrain);
+                    this->SetNonConvThreshold(Threshold);
+
+                    this->CalculateTangentTensor(rValues); // this modifies the C
+                    noalias(TangentTensor) = rValues.GetConstitutiveMatrix();
+                    this->SetValue(UNIAXIAL_STRESS, UniaxialStress, rValues.GetProcessInfo());
+                }
         }
         
     } // End CalculateMaterialResponseCauchy
