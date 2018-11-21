@@ -87,7 +87,7 @@ namespace Testing
 		Properties rMaterialProperties;
         Vector rStressVector, rStrainVector;
 
-        ModelPart& TestMdpa = ModelPart();
+        ModelPart TestMdpa("Main");
 
         NodeType::Pointer Node1 = TestMdpa.CreateNewNode(1, 0.0, 0.0, 0.0);
         NodeType::Pointer Node2 = TestMdpa.CreateNewNode(2, 1.0, 0.0, 0.0);

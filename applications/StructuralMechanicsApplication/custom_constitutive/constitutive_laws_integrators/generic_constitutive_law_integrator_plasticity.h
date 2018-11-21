@@ -384,17 +384,17 @@ public:
         {
             switch(CurveType)
             {
-                case HardeningCurveType::LinearSoftening:
+                case static_cast<int>(HardeningCurveType::LinearSoftening):
                     CalculateEqStressThresholdHardCurve1(PlasticDissipation, r0, r1,
                         EqThrsholds[i], Slopes[i], rMaterialProperties);
                     break;
 
-                case HardeningCurveType::ExponentialSoftening:
+                case static_cast<int>(HardeningCurveType::ExponentialSoftening):
                     CalculateEqStressThresholdHardCurve2(PlasticDissipation, r0, r1,
                         EqThrsholds[i], Slopes[i], rMaterialProperties);
                     break;
 
-                case HardeningCurveType::InitialHardeningExponentialSoftening:
+                case static_cast<int>(HardeningCurveType::InitialHardeningExponentialSoftening):
                     CalculateEqStressThresholdHardCurve3(PlasticDissipation, r0, r1,
                         EqThrsholds[i], Slopes[i], rMaterialProperties);  
                     break;
