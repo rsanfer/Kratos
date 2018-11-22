@@ -15,8 +15,7 @@
 #include <containers/array_1d.h>
 
 // External includes
-#include <ANurbs/Core>
-#include <ANurbs/Integration>
+#include <ANurbs/src/VectorTraits.h>
 
 // Project includes
 
@@ -50,6 +49,9 @@ struct Zero<Kratos::array_1d<TScalar, TDimension>>
 
 } // namespace Internals
 } // namespace ANurbs
+
+#include <ANurbs/Core>
+#include <ANurbs/Integration>
 
 namespace Kratos {
 
